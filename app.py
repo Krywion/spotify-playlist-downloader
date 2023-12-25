@@ -14,18 +14,23 @@ def index():
 @app.route("/callback")
 def callback():
     code = request.args.get('code')
-    state = request.args.get('state')
-    print("Code:", code)  # Debugowanie
-    print("State:", state)  # Debugowanie
-    session['code'] = code
+    token = spotifyAPI.client_auth(code)
+    print(token)
+    session.pop('token', None)
+    session['token'] = token
     return redirect("/user")
 
 @app.route("/user")
 def user():
-    code = session['code']
-    print(code)
-    username = spotifyAPI.get_username(code)
+    token = session['token']
+    username = spotifyAPI.get_username(token)
     return render_template("user.html", username=username)
+
+@app.route("/playlists")
+def playlists():
+    token = session['token']
+    playlists = spotifyAPI.get_playlists(token)
+    return render_template("playlists.html", playlists=playlists)
 
 
 if __name__ == "__main__":

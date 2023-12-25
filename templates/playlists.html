@@ -2,12 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User</title>
+    <title>Playlists</title>
 </head>
 <body>
-    <h1>User</h1>
+    <h1>Playlists</h1>
     <p>Logged in as {{username}}</p>
     <p><a href="/">Home</a></p>
     <p><a href="/playlists">Get Playlists</a></p>
+    <ul>
+      {% for playlist in playlists %}
+
+        <li>{{playlist}}</li>
+
+      {% endfor %}
+    </ul>
 </body>
 </html>
