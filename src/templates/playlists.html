@@ -12,7 +12,8 @@
     <ul>
       {% for playlist in playlists %}
 
-        <li>{{playlist}}</li>
+        <li>{{playlist.name}} {{playlist.owner}} <a href="/tracks/{{playlist.id}}">view tracks</a>
+        </li>
 
       {% endfor %}
     </ul>

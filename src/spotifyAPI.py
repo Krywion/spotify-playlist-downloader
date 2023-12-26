@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import os
 import string
 import random
+from src import playlist
 
 from requests import post, get
 
@@ -57,7 +58,6 @@ def client_auth(code):
     }
     result = post(url, headers=headers, data=data)
     json_result = json.loads(result.text)
-    print(json_result)
     auth_token = json_result['access_token']
     return auth_token
 
@@ -65,7 +65,6 @@ def client_auth(code):
 def get_username(token):
     url = "https://api.spotify.com/v1/me"
     auth_headers = get_auth_header(token)
-    print(auth_headers)
     result = get(url, headers=auth_headers)
     json_result = json.loads(result.text)
     return json_result['display_name']
@@ -76,8 +75,32 @@ def get_playlists(token):
     auth_headers = get_auth_header(token)
     result = get(url, headers=auth_headers)
     json_result = json.loads(result.text)
-    print(json_result)
     playlists = []
+
     for item in json_result['items']:
-        playlists.append(item['name'])
+        name = item['name']
+        id = item['id']
+        url = item['external_urls']['spotify']
+        owner = item['owner']['display_name']
+        playlist_obj = playlist.Playlist(id, name, url, owner)
+        playlists.append(playlist_obj)
+
     return playlists
+
+def get_tracks(token, playlist_id):
+    url = f"https://api.spotify.com/v1/playlists/{playlist_id}/tracks"
+    auth_headers = get_auth_header(token)
+    result = get(url, headers=auth_headers)
+    json_result = json.loads(result.text)
+    tracks = []
+
+    for item in json_result['items']:
+        name = item['track']['name']
+        id = item['track']['id']
+        url = item['track']['external_urls']['spotify']
+        artist = item['track']['artists'][0]['name']
+        track_obj = playlist.Track(id, name, url, artist)
+        tracks.append(track_obj)
+
+    return tracks
+
