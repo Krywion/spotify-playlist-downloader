@@ -40,15 +40,19 @@ def download_music(names, session):
 def clean_files():
     path = "../music"
     now = datetime.datetime.now()
-    for folder in os.listdir(path):
-        folder_path = os.path.join(path, folder)
-        if os.path.isdir(folder_path):
-            modification_time = datetime.datetime.fromtimestamp(os.path.getmtime(folder_path))
-            delta = now - modification_time
-            if delta.total_seconds() > 60:
-                try:
-                    shutil.rmtree(folder_path)
-                    os.remove(folder_path + '.zip')
-                    print(f'Usunięto folder {folder_path}')
-                except Exception as e:
-                    print(f'Błąd podczas usuwania folderu {folder_path}: {e}')
+    try:
+        for folder in os.listdir(path):
+            folder_path = os.path.join(path, folder)
+            if os.path.isdir(folder_path):
+                modification_time = datetime.datetime.fromtimestamp(os.path.getmtime(folder_path))
+                delta = now - modification_time
+                if delta.total_seconds() > 60:
+                    try:
+                        shutil.rmtree(folder_path)
+                        os.remove(folder_path + '.zip')
+                        print(f'Usunięto folder {folder_path}')
+                    except Exception as e:
+                        print(f'Błąd podczas usuwania folderu {folder_path}: {e}')
+    except Exception as e:
+        print(("nie znaleziono folderu music"))
+        os.makedirs(path)

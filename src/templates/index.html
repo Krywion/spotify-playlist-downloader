@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>SpotifyApp</title>
-</head>
-<body>
-    <h1>SpotifyApp</h1>
+{% extends "base.html" %}
+    {% block title %} SpotifyApp {% endblock %}
+
+{% block content %}
     <p>SpotifyApp is a web application that allows you to search for artists, albums and tracks on Spotify.</p>
     <p>It is built using the <a href="https://developer.spotify.com/web-api/">Spotify Web API</a>
     <p>Login via Spotify</p>
     <a href={{loginUrl}}>Login</a>
-</body>
-</html>
+{% endblock %}
