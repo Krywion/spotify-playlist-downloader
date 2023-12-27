@@ -54,5 +54,5 @@ def clean_files():
                     except Exception as e:
                         print(f'Błąd podczas usuwania folderu {folder_path}: {e}')
     except Exception as e:
-        print(("nie znaleziono folderu music"))
+        print(("nie znaleziono folderu music, tworzę nowy Error: " + str(e)))
         os.makedirs(path)

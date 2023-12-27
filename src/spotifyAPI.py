@@ -13,6 +13,7 @@ load_dotenv()
 
 client_id = os.getenv('CLIENT_ID')
 client_secret = os.getenv('CLIENT_SECRET')
+redirect_uri = os.getenv('REDIRECT_URI')
 
 
 def get_random_string(length):
@@ -29,13 +30,10 @@ def login():
     scope = "playlist-read-private%20user-read-private%20user-read-email"
     state = get_random_string(16)
 
-
-    redirect_uri = "http://localhost:8080/callback"
     redirect_url = 'https://accounts.spotify.com/authorize?' + \
                    f'response_type=code&client_id={client_id}&' + \
                    f'scope={scope}&redirect_uri={redirect_uri}&' + \
                    f'state={state}'
-
 
     return redirect_url
 
@@ -54,7 +52,7 @@ def client_auth(code):
     data = {
         'grant_type': "authorization_code",
         'code': code,
-        'redirect_uri': "http://localhost:8080/callback"
+        'redirect_uri': redirect_uri
     }
     result = post(url, headers=headers, data=data)
     json_result = json.loads(result.text)
