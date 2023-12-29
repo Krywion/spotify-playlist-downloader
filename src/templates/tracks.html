@@ -1,17 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Tracks</title>
-</head>
-<body>
-<a href="/download/{{playlist_id}}">Download playlist</a>
-<ul>
-  {% for track in tracks %}
-    <li>{{track.name}} {{track.artist}} <a href="{{track.url}}">link</a>
-    </li>
-  {% endfor %}
-</ul>
+{% extends "base.html" %}
 
-</body>
-</html>
+
+{% block title %} Tracks {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="../static/tracks.css">
+{% endblock %}
+
+{% block content %}
+   <div class="container">
+       {% for track in tracks %}
+       <div class="track">
+           <span> {{track.name}} </span>
+           <span> {{track.artist}} </span>
+       </div>
+       {% endfor %}
+   </div>
+{% endblock %}
