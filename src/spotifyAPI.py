@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import os
 import string
 import random
-from src import playlist
+import playlist
 
 from requests import post, get
 
@@ -25,6 +25,21 @@ def get_random_string(length):
 def get_auth_header(auth_token):
     return {"Authorization": f"Bearer {auth_token}"}
 
+def get_token():
+    auth_str = f"{client_id}:{client_secret}"
+    auth_bytes = auth_str.encode('utf8')
+    auth_base64 = str(base64.b64encode(auth_bytes), 'utf8')
+
+    url = "https://accounts.spotify.com/api/token"
+    headers = {
+        "Authorization": f"Basic {auth_base64}",
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+    data = {"grant_type": "client_credentials"}
+    result = post(url, headers=headers, data=data)
+    json_result = json.loads(result.text)
+    auth_token = json_result['access_token']
+    return auth_token
 
 def login():
     scope = "playlist-read-private%20user-read-private%20user-read-email"
@@ -79,8 +94,9 @@ def get_playlists(token):
         name = item['name']
         id = item['id']
         url = item['external_urls']['spotify']
+        img_url = item['images'][0]['url']
         owner = item['owner']['display_name']
-        playlist_obj = playlist.Playlist(id, name, url, owner)
+        playlist_obj = playlist.Playlist(id, name, url, img_url ,owner)
         playlists.append(playlist_obj)
 
     return playlists
@@ -102,3 +118,8 @@ def get_tracks(token, playlist_id):
 
     return tracks
 
+
+def get_playlist_id(search_query):
+    id = search_query.split('/')[-1]
+    id = id.split('?')[0]
+    return id

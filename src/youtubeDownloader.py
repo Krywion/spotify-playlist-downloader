@@ -5,7 +5,7 @@ import shutil
 from tqdm import tqdm
 from yt_dlp import YoutubeDL
 
-
+current_progress = {}
 
 
 def get_music_urls(name):
@@ -23,19 +23,26 @@ def get_all_music_urls(names):
         urls.append(get_music_urls(name))
     return urls
 
-def download_music(names, session):
+
+def download_music(names, playlist_id):
     urls = get_all_music_urls(names)
     ydl_opts = {
         'format': 'bestaudio/best',
-        'outtmpl': '../music/' + session + '/%(title)s.%(ext)s',
+        'outtmpl': '../music/' + playlist_id + '/%(title)s.%(ext)s',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
         }],
     }
+    print("Downloading music...")
     with YoutubeDL(ydl_opts) as ydl:
-        for url in tqdm(urls):
+        for i, url in enumerate(tqdm(urls)):
             ydl.download([url])
+            progress = int((i + 1) / len(urls) * 100)
+            current_progress[playlist_id] = progress
+    print("Download finished")
+    current_progress[playlist_id] = 0
+
 
 def clean_files():
     path = "../music"
@@ -56,3 +63,7 @@ def clean_files():
     except Exception as e:
         print(("nie znaleziono folderu music, tworzę nowy Error: " + str(e)))
         os.makedirs(path)
+
+
+def get_current_progress(playlist_id):
+    return current_progress.get(playlist_id)
