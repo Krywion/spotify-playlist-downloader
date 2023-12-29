@@ -1,0 +1,52 @@
+.playlist-card-image {
+    margin-right: 10px;
+}
+
+.playlist-card-image img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+
+.playlist-card-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.playlist-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.playlist-owner {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 30px;
+}
+
+.playlist-card {
+    max-height: 80px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+                0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.playlist-tracks-btn {
+    all: unset;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 5%;
+    padding: 0 10px 0 10px;
+}
+
+#progress-bar {
+    display: none;
+}
+

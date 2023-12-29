@@ -1,0 +1,24 @@
+.login-button {
+    background-color:  rgb(61, 216, 96);
+    border: none;
+    color: white;
+    padding: 10px 28px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+                0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#playlist-search-button {
+    padding: 4px 28px;
+}
+
+#playlist-search-input {
+    border-radius: 25px;
+    border: 1px solid rgb(61, 216, 96);
+    padding: 4px 8px;
+}
+
+

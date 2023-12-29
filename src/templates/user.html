@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>User</title>
-</head>
-<body>
-    <h1>User</h1>
+{% extends "base.html" %}
+
+{% block title %} {{ username }} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="../static/user.css">
+{% endblock %}
+
+{% block content %}
     <p>Logged in as {{username}}</p>
-    <p><a href="/">Home</a></p>
-    <p><a href="/playlists">Get Playlists</a></p>
-</body>
-</html>
+    <p><a class="get-playlist-btn" href="/playlists">Get Playlists</a></p>
+{% endblock %}

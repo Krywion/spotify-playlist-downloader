@@ -1,21 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Playlists</title>
-</head>
-<body>
-    <h1>Playlists</h1>
-    <p>Logged in as {{username}}</p>
-    <p><a href="/">Home</a></p>
-    <p><a href="/playlists">Get Playlists</a></p>
-    <ul>
+{% extends 'base.html' %}
+{% block title %} Playlists {% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="../static/playlists.css">
+{% endblock %}
+
+{% block content %}
+    <div id="progress-bar">
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
       {% for playlist in playlists %}
-
-        <li>{{playlist.name}} {{playlist.owner}} <a href="/tracks/{{playlist.id}}">view tracks</a>
-        </li>
-
+        <div class="playlist-card d-flex align-items-center">
+            <div class="playlist-card-image">
+                <img src="{{playlist.img_url}}" alt="playlist image">
+            </div>
+          <div class="playlist-card-info">
+            <span class="playlist-name">{{playlist.name}}</span>
+            <span class="playlist-owner">{{playlist.owner}}</span>
+            <a class="playlist-tracks-btn" href="/tracks/{{playlist.id}}">View tracks</a>
+              <a class="playlist-tracks-btn download-btn" href="/download/{{playlist.id}}">Download</a>
+          </div>
+        </div>
       {% endfor %}
-    </ul>
-</body>
-</html>
+    {% block scripts %}
+        <script src="https://cdn.socket.io/4.7.2/socket.io.min.js" integrity="sha384-mZLF4UVrpi/QTWPA7BjNPEnkIfRFn4ZEO3Qt/HFklTJBj/gBOV8G3HcKn4NfQblz" crossorigin="anonymous"></script>
+        <script src="../static/progressBar.js"></script>
+    {% endblock %}
+{% endblock %}
+

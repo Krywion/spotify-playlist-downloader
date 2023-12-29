@@ -1,9 +1,21 @@
 {% extends "base.html" %}
     {% block title %} SpotifyApp {% endblock %}
+    {% block stylesheets %}
+    <link rel="stylesheet" href="../static/index.css">
+    {% endblock %}
 
 {% block content %}
-    <p>SpotifyApp is a web application that allows you to search for artists, albums and tracks on Spotify.</p>
-    <p>It is built using the <a href="https://developer.spotify.com/web-api/">Spotify Web API</a>
-    <p>Login via Spotify</p>
-    <a href={{loginUrl}}>Login</a>
+<div class="mt-5 flex-column">
+    <form action="/search-playlist" method="post">
+        <div class="playlist-search-input mb-4">
+            {{ form.csrf_token }}
+            {{ form.search_query(id="playlist-search-input", placeholder="Search for a playlist", required=True) }}
+            {{ form.submit(class="login-button", id="playlist-search-button", type="submit") }}
+        </div>
+    </form>
+
+    <p>To download your private playlists you have to connect to your spotify account</p>
+    <a class="login-button" href="{{ loginUrl }}">Connect to Spotify</a>
+</div>
+
 {% endblock %}
